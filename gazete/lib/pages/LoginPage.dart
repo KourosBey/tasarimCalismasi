@@ -3,6 +3,7 @@ import 'package:gazete/pages/UIHelper.dart';
 import 'package:gazete/pages/mainPage.dart';
 import 'package:gazete/pages/registerPage.dart';
 import "package:gazete/service/auth.dart";
+import 'package:gazete/Widgets/navigationbar.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -90,7 +91,7 @@ class _LoginState extends State<Login> {
                                       Navigator.pushReplacement(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => MainPage(),
+                                          builder: (context) => NavigationBar(),
                                         ),
                                       ),
                                     },
@@ -132,7 +133,7 @@ class _LoginState extends State<Login> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => Register(),
+                                  builder: (context) => CreateAccount(),
                                 ),
                               );
                             },
@@ -144,7 +145,7 @@ class _LoginState extends State<Login> {
                                 right: 10,
                               ),
                               child: Text(
-                                "KayıtO",
+                                "Kayıt Ol",
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 15,

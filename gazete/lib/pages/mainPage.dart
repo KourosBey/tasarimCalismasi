@@ -5,6 +5,7 @@ import 'package:gazete/pages/profil.dart';
 import 'LoginPage.dart';
 import 'package:gazete/constanst/constants.dart';
 import 'package:gazete/service/auth.dart';
+import 'package:gazete/Widgets/navigationbar.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -42,14 +43,7 @@ class _MainPage extends State<MainPage> {
                   margin: EdgeInsets.all(10.0),
                   decoration: BoxDecoration(),
                 ),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Profil(),
-                    ),
-                  );
-                },
+                onTap: () {},
               ),
               Container(
                 margin: EdgeInsets.all(10.0),

@@ -67,7 +67,7 @@ class AuthService {
   }*/
 
   Future<String> getCurrentUID() async {
-    return (await auth.currentUser.uid);
+    return await auth.currentUser.uid;
   }
 
   Future getCurrentuser() async {

@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:gazete/Navigasyon/stat_widget.dart';
 import 'package:gazete/service/auth.dart';
 
+
+
 class Profil extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
