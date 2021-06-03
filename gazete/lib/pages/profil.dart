@@ -3,18 +3,32 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:gazete/Navigasyon/stat_widget.dart';
 import 'package:gazete/constanst/constants.dart';
-import 'package:gazete/pages/mainPage.dart';
 import 'LoginPage.dart';
-import 'package:gazete/Widgets/navigationbar.dart';
+import 'package:gazete/service/auth.dart';
 
 class Profil extends StatefulWidget {
   @override
-  GetUserName createState() => GetUserName();
+  ProfilSayfasi createState() => ProfilSayfasi();
 }
 
 var id;
 
-class GetUserName extends State<Profil> {
+class ProfilSayfasi extends State<Profil> {
+  void choiceAction(String choice) {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => Login()),
+    );
+  }
+
+  final String currentUserId = AuthService().currentUser?.uid;
+  String postOrientation = "grid";
+  bool isFollowing = false;
+  bool isLoading = false;
+  int postCount = 0;
+  int followerCount = 0;
+  int followingCount = 0;
+
   @override
   Widget build(BuildContext context) {
     FirebaseAuth auth = FirebaseAuth.instance;
@@ -168,13 +182,6 @@ class GetUserName extends State<Profil> {
           );
         }
       },
-    );
-  }
-
-  void choiceAction(String choice) {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => Login()),
     );
   }
 }

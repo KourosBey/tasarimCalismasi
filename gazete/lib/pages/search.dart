@@ -3,11 +3,47 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gazete/models/user.dart';
-import 'package:gazete/pages/mainPage.dart';
 import 'package:gazete/Widgets/progress.dart';
+import 'package:gazete/main.dart';
+import 'package:flutter/material.dart';
+import 'package:gazete/models/user.dart';
 
-final usersRef = FirebaseFirestore.instance.collectionGroup('users');
-User currentUser;
+/*
+class Arama extends StatefulWidget {
+  @override
+  _AramaState createState() => _AramaState();
+}
+
+class _AramaState extends State<Arama> {
+  AppBar buildSearchField() {
+    return AppBar(
+      backgroundColor: Colors.white,
+      title: TextFormField(
+        decoration: InputDecoration(
+            hintText: "Search",
+            filled: true,
+            prefixIcon: Icon(
+              Icons.account_box,
+              size: 28.0,
+            ),
+            suffixIcon: IconButton(
+              icon: Icon(Icons.clear),
+              onPressed: () => print('cleared'),
+            )),
+      ),
+    );
+  }
+
+  Container buildNoContent() {
+    return Container();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(appBar: buildSearchField(), body: buildNoContent());
+  }
+}
+*/
 
 class Search extends StatefulWidget {
   @override
@@ -17,11 +53,41 @@ class Search extends StatefulWidget {
 class _SearchState extends State<Search> {
   TextEditingController searchController = TextEditingController();
   Future<QuerySnapshot> searchResultsFuture;
+  //Future<List> searchResltList;
 
-  handleSearch(String query) {
-    Future<QuerySnapshot> users =
-        usersRef.where("displayName", isGreaterThanOrEqualTo: query).get();
+  handleSearch(var query) {
+    //Future<List> user;
+    /*
+    userRef
+        .where('userName', isGreaterThanOrEqualTo: query)
+        .snapshots()s
+        .asyncMap((QuerySnapshot snapshot) => users);
+    print(users);
+
+
+    .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        print(doc['userName']);
+        users = doc;
+      });
+    });
+
+    handleSearch(String query) {
+    Future<QuerySnapshot> users = usersRef
+        .where("displayName", isGreaterThanOrEqualTo: query)
+        .getDocuments();
     setState(() {
+      searchResultsFuture = users;
+    });
+  }
+   */
+    Future<QuerySnapshot> users =
+        userRef.where('userName', isGreaterThanOrEqualTo: query).get();
+    // ignore: missing_return
+
+    setState(() {
+      //searchResltList = user;
+
       searchResultsFuture = users;
     });
   }
@@ -36,7 +102,7 @@ class _SearchState extends State<Search> {
       title: TextFormField(
         controller: searchController,
         decoration: InputDecoration(
-          hintText: "Search for a user...",
+          hintText: "Kullanici Adini Giriniz..",
           filled: true,
           prefixIcon: Icon(
             Icons.account_box,
@@ -47,22 +113,17 @@ class _SearchState extends State<Search> {
             onPressed: clearSearch,
           ),
         ),
-        onFieldSubmitted: handleSearch,
+        onFieldSubmitted: handleSearch("atillagmeric"),
       ),
     );
   }
 
   Container buildNoContent() {
-    final Orientation orientation = MediaQuery.of(context).orientation;
     return Container(
       child: Center(
         child: ListView(
           shrinkWrap: true,
           children: <Widget>[
-            SvgPicture.asset(
-              'assets/images/search.svg',
-              height: orientation == Orientation.portrait ? 300.0 : 200.0,
-            ),
             Text(
               "Find Users",
               textAlign: TextAlign.center,
@@ -86,8 +147,9 @@ class _SearchState extends State<Search> {
         if (!snapshot.hasData) {
           return circularProgress();
         }
+
         List<UserResult> searchResults = [];
-        snapshot.data.documents.forEach((doc) {
+        snapshot.data((doc) {
           User user = User.fromDocument(doc);
           UserResult searchResult = UserResult(user);
           searchResults.add(searchResult);
@@ -126,7 +188,6 @@ class UserResult extends StatelessWidget {
             child: ListTile(
               leading: CircleAvatar(
                 backgroundColor: Colors.grey,
-                backgroundImage: CachedNetworkImageProvider(user.photoUrl),
               ),
               title: Text(
                 user.displayName,

@@ -1,11 +1,18 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
 
 class AuthService {
   final FirebaseAuth auth = FirebaseAuth.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  final usersRef = FirebaseFirestore.instance.collection('users');
+  final postsRef = FirebaseFirestore.instance.collection('posts');
+  final commentsRef = FirebaseFirestore.instance.collection('comments');
+  final activityFeedRef = FirebaseFirestore.instance.collection('feed');
+  final followersRef = FirebaseFirestore.instance.collection('followers');
+  final followingRef = FirebaseFirestore.instance.collection('following');
+  final DateTime timestamp = DateTime.now();
+  User currentUser;
 
 //Giriş Yapmak için
   Future<User> singIn(String email, String password) async {
@@ -30,6 +37,7 @@ class AuthService {
   }
 //Kayıt olma fonksiyonu
 
+  // ignore: missing_return
   Future<User> registerUser(String name, String email, String password) async {
     var user;
     try {

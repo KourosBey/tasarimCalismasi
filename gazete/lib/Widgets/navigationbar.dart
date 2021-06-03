@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gazete/pages/mainPage.dart';
 import 'package:gazete/pages/search.dart';
 import 'package:gazete/pages/profil.dart';
+import 'package:gazete/service/auth.dart';
 
 class NavigationBar extends StatefulWidget {
   @override
