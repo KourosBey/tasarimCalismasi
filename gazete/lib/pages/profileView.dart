@@ -112,7 +112,7 @@ class _ProfilState extends StatelessWidget {
           return Text('Something went wrong');
         }
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
+          return Center(child: CircularProgressIndicator());
         }
         return new ListView(
           children: snapshot.data.docs.map((DocumentSnapshot document) {
