@@ -41,10 +41,10 @@ class ProfilSayfasi extends State<Profil> {
         if (snapshot.hasError) {
           return Text("Uhh. Somethings went Wrong");
         }
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
+        if (!snapshot.hasData) {
+          return Center(child: CircularProgressIndicator());
         }
-        if (snapshot.connectionState == ConnectionState.done) {
+        if (snapshot.hasData) {
           Map<String, dynamic> data = snapshot.data.data();
           return Scaffold(
             appBar: AppBar(
@@ -181,6 +181,7 @@ class ProfilSayfasi extends State<Profil> {
             ),
           );
         }
+        return Container();
       },
     );
   }

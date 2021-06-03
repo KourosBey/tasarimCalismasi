@@ -53,6 +53,7 @@ class Search extends StatefulWidget {
 class _SearchState extends State<Search> {
   TextEditingController searchController = TextEditingController();
   Future<QuerySnapshot> searchResultsFuture;
+
   //Future<List> searchResltList;
 
   handleSearch(var query) {
@@ -81,14 +82,14 @@ class _SearchState extends State<Search> {
     });
   }
    */
-    Future<QuerySnapshot> users =
-        userRef.where('userName', isGreaterThanOrEqualTo: query).get();
+    Future<QuerySnapshot> usersCollection =
+        userRef.where('userName', isEqualTo: query).get();
     // ignore: missing_return
 
     setState(() {
       //searchResltList = user;
 
-      searchResultsFuture = users;
+      searchResultsFuture = usersCollection;
     });
   }
 
@@ -113,7 +114,7 @@ class _SearchState extends State<Search> {
             onPressed: clearSearch,
           ),
         ),
-        onFieldSubmitted: handleSearch("atillagmeric"),
+        onChanged: (value) => handleSearch(value),
       ),
     );
   }
@@ -147,13 +148,15 @@ class _SearchState extends State<Search> {
         if (!snapshot.hasData) {
           return circularProgress();
         }
-
         List<UserResult> searchResults = [];
-        snapshot.data((doc) {
+
+        final users = snapshot.data.docs.map((doc) {
           User user = User.fromDocument(doc);
           UserResult searchResult = UserResult(user);
           searchResults.add(searchResult);
-        });
+        }).toList();
+        print(users);
+
         return ListView(
           children: searchResults,
         );
